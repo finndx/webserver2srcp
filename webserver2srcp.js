@@ -78,6 +78,7 @@ if (DEBUG_MODE) {
 
 class WebserverSRCP {
     constructor() {
+        this.lastCommand = '';
         this.currentFreq = 0;
         this.currentBandwidth = 0;
         this.lastFreq = null; // Track the last sent frequency
@@ -347,8 +348,11 @@ class WebserverSRCP {
                 const requestedBandwidth = parseInt(query.split('=')[1]);
                 const closestBandwidth = this.getClosestBandwidth(requestedBandwidth);
                 if (closestBandwidth !== null) {
-                    this.currentBandwidth = closestBandwidth;
-                    this.sendBandwidthChangeCommand(closestBandwidth);
+                    if (closestBandwidth !== this.currentBandwidth) {
+                        this.lastBandwidth = this.currentBandwidth;
+                        this.currentBandwidth = closestBandwidth;
+                        this.sendBandwidthChangeCommand(closestBandwidth);
+                    }
                 } else {
                     console.error(`Requested bandwidth ${requestedBandwidth} is not valid for receiver type ${RECEIVER_TYPE}.`);
                 }
@@ -393,15 +397,18 @@ class WebserverSRCP {
             this.forwardToWebSocket(`F${index}`); 
         } else if (RECEIVER_TYPE === 'TEF') {
             // Send command for TEF receiver type
-            this.forwardToWebSocket(`W${this.currentBandwidth}`);
+            this.forwardToWebSocket(`W${bandwidth}`);
         }
     }
 
     forwardToWebSocket(command) {
         if (this.websocket.readyState === WebSocket.OPEN) {
-            this.websocket.send(command);
-            if (DEBUG_MODE) {
-                console.log(`Forwarded to WebSocket: ${command}`);
+            if (command !== this.lastCommand) {
+                this.websocket.send(command);
+                this.lastCommand = command;
+                if (DEBUG_MODE) {
+                    console.log(`Forwarded to WebSocket: ${command}`);
+                }
             }
         } else {
             console.error('WebSocket communicator not initialized.');
