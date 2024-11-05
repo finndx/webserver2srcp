@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////
 ///                                                             ///
-///  WEBSERVER2SRCP v1.0                                        ///
-///  by M.Weck                          Release date: 19.09.24  ///
+///  WEBSERVER2SRCP v1.0.1                                      ///
+///  by M.Weck                          Release date: 06.11.24  ///
 ///                                                             ///
 ///  StationList can now be used together with FMDX Webservers  ///
 ///                                                             ///
