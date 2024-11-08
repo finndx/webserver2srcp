@@ -30,7 +30,7 @@ In case, you're using your own FMDX Webserver with the default settings running 
 > The default UDP Port to be created for StationList is 8430. If you want to have it on other port, you need to define it manually with the -u switch. If you want it to be running on port 8555 for example, please add `-u 8555` option to your command.
 
 > [!CAUTION]
-> Bandwidth handlind is implemented in a different way for TEF and XDR receivers. If you're using Webserver2srcp with a Sony XDR receiver unit, be sure to set also the receiver type with the `-r x` option. For a TEF receiver you don't need to add anything - it is a default.
+> Bandwidth handling is implemented in a different way for TEF and XDR receivers. If you're using Webserver2srcp with a Sony XDR receiver unit, be sure to set also the receiver type with the `-r x` option. For a TEF receiver you don't need to add anything - it is a default.
 
 ### Short instructions for downloading and setting up StationList
 
